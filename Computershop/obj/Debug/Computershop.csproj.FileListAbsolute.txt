@@ -1,0 +1,14 @@
+C:\Users\SomogyiK\source\repos\Computershop\Computershop\obj\Debug\Computershop.csproj.AssemblyReference.cache
+C:\Users\SomogyiK\source\repos\Computershop\Computershop\obj\Debug\MainWindow.baml
+C:\Users\SomogyiK\source\repos\Computershop\Computershop\obj\Debug\MainWindow.g.cs
+C:\Users\SomogyiK\source\repos\Computershop\Computershop\obj\Debug\App.g.cs
+C:\Users\SomogyiK\source\repos\Computershop\Computershop\obj\Debug\Computershop_MarkupCompile.cache
+C:\Users\SomogyiK\source\repos\Computershop\Computershop\obj\Debug\Computershop.g.resources
+C:\Users\SomogyiK\source\repos\Computershop\Computershop\obj\Debug\Computershop.Properties.Resources.resources
+C:\Users\SomogyiK\source\repos\Computershop\Computershop\obj\Debug\Computershop.csproj.GenerateResource.cache
+C:\Users\SomogyiK\source\repos\Computershop\Computershop\obj\Debug\Computershop.csproj.CoreCompileInputs.cache
+C:\Users\SomogyiK\source\repos\Computershop\Computershop\bin\Debug\Computershop.exe.config
+C:\Users\SomogyiK\source\repos\Computershop\Computershop\bin\Debug\Computershop.exe
+C:\Users\SomogyiK\source\repos\Computershop\Computershop\bin\Debug\Computershop.pdb
+C:\Users\SomogyiK\source\repos\Computershop\Computershop\obj\Debug\Computershop.exe
+C:\Users\SomogyiK\source\repos\Computershop\Computershop\obj\Debug\Computershop.pdb
