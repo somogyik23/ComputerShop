@@ -1,40 +1,28 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using MySql.Data.MySqlClient;
+﻿using MySql.Data.MySqlClient;
 
-namespace Computershop
+namespace ComputerShop
 {
     internal class Connect
     {
-        private string Host;
-        private string database;
-        private string user;
-        private string Password;
-        private string ConnectionString;
-        private MySqlConnection connectionString;
+        public MySqlConnection _connection;
 
-        public Connect(string database, string user, string password)
+        private string _host;
+        private string _db;
+        private string _user;
+        private string _pass;
+
+        private string _connectionString;
+
+        public Connect()
         {
-            this.Host = "localhost";
-            this.database = database;
-            this.user = "root";
-            this.Password = "";
+            _host = "localhost";
+            _db = "computershop";
+            _user = "root";
+            _pass = "";
 
-            ConnectionString = $"Server={Host};Database={database};Uid={user};Pwd={password};SslMode=None";
-            connectionString = new MySqlConnection(ConnectionString);
+            _connectionString = $"SERVER={_host};DATABASE={_db};UID={_user};PASSWORD={_pass};SslMode=None";
 
-            try
-            {
-                connectionString.Open();
-                Console.WriteLine("Sikeres csatlakozás");
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine($"Sikertelen csatlakozás: {ex.Message}");
-            }
+            _connection = new MySqlConnection(_connectionString);
         }
     }
 }
