@@ -7,22 +7,51 @@ namespace ComputerShop.Services
     internal class Users : IDatabase
     {
         Connect conn = new Connect();
-        public ICollection<object> GetAllData()
+
+        public object AddRecord(string username, string password, string email, string fullname)
         {
-            ICollection<object> data = new List<object>();
+            string salt = GenerateSalt();
+            string hashedPassword = ComputeHmacSha256(password, salt);
             conn._connection.Open();
 
+            string sql = "INSERT INTO `users`(`UserName`, `FullName`, `Password`, `Email`, `Salt`) VALUES (@username,@password,@email,@fullname,@salt)";
+
+            MySqlCommand cmd = new MySqlCommand(sql, conn._connection);
+            cmd.Parameters.AddWithValue("@username", username);
+            cmd.Parameters.AddWithValue("@password", hashedPassword);
+            cmd.Parameters.AddWithValue("@email", email);
+            cmd.Parameters.AddWithValue("@fullname", fullname);
+            cmd.Parameters.AddWithValue("@salt", salt);
+
+            cmd.ExecuteNonQuery();
 
             conn._connection.Close();
 
-            return data;
+            return new { message = "Sikeres regisztráció!" };
         }
 
-        public object GetData(string username, string password)
+        public DataView GetAllData()
         {
             conn._connection.Open();
 
-            string sql = "SELECT * FROM users WHERE username = @username AND password = @password";
+            string sql = "SELECT * FROM users";
+
+            MySqlDataAdapter adapter = new MySqlDataAdapter(sql, conn._connection);
+
+            DataTable dt = new DataTable();
+
+            adapter.Fill(dt);
+
+            conn._connection.Close();
+
+            return dt.DefaultView;
+        }
+
+        public bool GetData(string username, string password)
+        {
+            conn._connection.Open();
+
+            string sql = "SELECT * FROM users WHERE UserName = @username AND Password = @password";
 
             MySqlCommand cmd = new MySqlCommand(sql, conn._connection);
             cmd.Parameters.AddWithValue("@username", username);
@@ -30,17 +59,38 @@ namespace ComputerShop.Services
 
             MySqlDataReader reader = cmd.ExecuteReader();
 
-            string result = "";
-            if (reader.Read() == true)
-                result = "Regisztrált tag";
+            if (reader.Read())
+            {
+                conn._connection.Close();
+                return true;
+
+            }
             else
-                result = "Nem regisztrált tag";
-
-            conn._connection.Close();
-
-            return new { message = result };
+            {
+                conn._connection.Close();
+                return false;
+            }
         }
 
+        public string GenerateSalt()
+        {
+            byte[] salt = new byte[16];
 
+            using (var rnd = RandomNumberGenerator.Create())
+            {
+                rnd.GetBytes(salt);
+            }
+
+            return Convert.ToBase64String(salt);
+        }
+
+        public string ComputeHmacSha256(string password, string salt)
+        {
+            using (var hmac = new HMACSHA256(Encoding.UTF8.GetBytes(salt)))
+            {
+                byte[] hash = hmac.ComputeHash(Encoding.UTF8.GetBytes(password));
+                return Convert.ToBase64String(hash);
+            }
+        }
     }
 }
